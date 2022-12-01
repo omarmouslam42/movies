@@ -4,7 +4,9 @@ import Joi from 'joi'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
 
-export default function Login() {
+export default function Login({getTkn}) {
+
+
 
  const navigate =  useNavigate()
   const [user, setUser] = useState({
@@ -35,7 +37,9 @@ export default function Login() {
       // go home
       console.log("done");
       //navigate
-      console.log(data.token);
+      localStorage.setItem("tkn",data.token )
+      getTkn();
+      // console.log(data.token);
       navigate("/home")
     }
     else{
