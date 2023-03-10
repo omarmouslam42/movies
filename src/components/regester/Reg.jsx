@@ -6,7 +6,6 @@ import { useNavigate } from 'react-router-dom';
 
 export default function Reg() {
 
- const navigate =  useNavigate()
   const [user, setUser] = useState({
     first_name:"",
     last_name:"",
@@ -17,12 +16,12 @@ export default function Reg() {
   const [errores, setErrores] = useState([]);
   const [apiMessage, setApiMessage] = useState("");
   const [alreadyReg, setAlreadyReg] = useState("");
+  const [iconClick, setIconClick] = useState(true);
 
- 
-
-
+  const navigate =  useNavigate()
 
   function getUser(e){
+    setApiMessage('');
     let newUser ={...user};
     let userValue = e.target.value;
     newUser[e.target.id]= userValue;
@@ -31,7 +30,7 @@ export default function Reg() {
 
 
   async function userApi() {
-    let {data} = await axios.post(`https://route-egypt-api.herokuapp.com/signup`,user)
+    let {data} = await axios.post(`https://sticky-note-fe.vercel.app/signup`,user);
     console.log(data.message);
 
     if (data.message == "success") {
@@ -47,15 +46,15 @@ export default function Reg() {
     else{
       setApiMessage(data.message);
     }
+    setIconClick(true)
   }
 
 
   function submitUser(e){
-   
+   setIconClick(false)
     e.preventDefault();
 
   const schema = Joi.object({
-
     first_name: Joi.string().alphanum().min(3).max(20).required(),
     last_name: Joi.string().alphanum().min(3).max(20).required(),
     age: Joi.number().min(18).max(60).required(),
@@ -70,9 +69,12 @@ export default function Reg() {
   }
   else{
     setErrores(validate.error.details)
-    console.log(validate.error.details);
+    setIconClick(true)
+    // console.log(validate.error.details);
+   
   }
   }
+
   
   function sendKey(key) {
     if (errores.length != 0) {
@@ -87,8 +89,8 @@ export default function Reg() {
 
 
   return <>
-  <div><h2 className='m-3'>Movie<span className='text-danger'>d</span><span className='text-info'>b</span></h2></div>
-  <div className= 'reg container py-5 w-50'>
+  {/* <div><h2 className='m-3'>Movie<span className='text-danger'>d</span><span className='text-info'>b</span></h2></div> */}
+  <div className= 'reg container py-5 w-50 mt-5'>
    <form onSubmit={submitUser}>
     <h3 className='my-3'>Registeration Form</h3>
     <div className='mb-3'>
@@ -119,11 +121,12 @@ export default function Reg() {
     <label htmlFor="password">Password</label>
     <input onChange={getUser} id='password' type="password" className='form-control form-control-lg shadow-none border-0 'placeholder='your password'  />
     { sendKey("password")? <div className='text-danger mt-2'><i className="fa-solid fa-circle-xmark text-danger"></i>   your password is incorrect </div> :"" }
-    
     </div>
     {apiMessage.length !=0 ? <div className='text-success'>Register</div> :""}
     <div className=' d-flex'>
-    <button className='btn btn-outline-info  fw-semibold' type='submit'>Register</button>
+    <button className='btn btn-outline-info  fw-semibold' type='submit'>
+      {iconClick == true?"Register":<i className="fa-solid fa-spinner fa-spin text-white"></i>}
+      </button>
     {alreadyReg.length !=0 ? <div className='text-danger ms-2 fs-5'>email already registered</div> :""}
     </div>
    </form>

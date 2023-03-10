@@ -6,14 +6,16 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import './index.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import "jquery/dist/jquery.min.js"
-
 // import $ from 'jquery'
 import reportWebVitals from './reportWebVitals';
+import UserContext from './context/UserContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <UserContext>
+      <App />
+    </UserContext>
   </React.StrictMode>
 );
 

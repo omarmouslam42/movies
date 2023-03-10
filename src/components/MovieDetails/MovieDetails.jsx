@@ -20,8 +20,8 @@ export default function MovieDetails() {
   return<>
 
   
-  {alldetails.length !=0? <div className='container py-5'>
-    <div className='row'>
+  {alldetails.length !=0? <div className='container py-5 mt-5'>
+    <div className='row mt-5'>
       <div className='col-md-3'>
         <img src={"https://image.tmdb.org/t/p/w500"+ alldetails.poster_path} className='w-100' alt="poster" />
         <h6 className='mt-2 text-center'>{alldetails.title?alldetails.title:alldetails.name}</h6>

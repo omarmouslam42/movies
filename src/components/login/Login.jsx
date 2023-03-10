@@ -1,27 +1,28 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useState } from 'react';
 import Joi from 'joi'
 import axios from 'axios'
-import { useNavigate } from 'react-router-dom';
+import {  useNavigate } from 'react-router-dom';
+import { ApiContext } from '../../context/UserContext';
 
-export default function Login({getTkn}) {
+export default function Login() {
 
-
-
- const navigate =  useNavigate()
+  const {getTkn} = useContext(ApiContext);
+  const navigate =  useNavigate()
   const [user, setUser] = useState({
     email:"",
     password:"",
   });
   const [errores, setErrores] = useState([]);
   const [apiMessage, setApiMessage] = useState("");
- 
+  const [iconClick, setIconClick] = useState(true);
 
  
 
 
 
   function getUser(e){
+    setApiMessage("")
     let newUser ={...user};
     let userValue = e.target.value;
     newUser[e.target.id]= userValue;
@@ -30,7 +31,7 @@ export default function Login({getTkn}) {
 
 
   async function userApi() {
-    let {data} = await axios.post(`https://route-egypt-api.herokuapp.com/signin`,user)
+    let {data} = await axios.post(`https://sticky-note-fe.vercel.app/signin`,user)
     console.log(data.message);
 
     if (data.message == "success") {
@@ -45,11 +46,12 @@ export default function Login({getTkn}) {
     else{
       setApiMessage(data.message);
     }
+    setIconClick(true)
   }
 
 
   function submitUser(e){
-   
+   setIconClick(false)
     e.preventDefault();
 
   const schema = Joi.object({
@@ -64,10 +66,12 @@ export default function Login({getTkn}) {
   }
   else{
     setErrores(validate.error.details)
-    console.log(validate.error.details);
+    // console.log(validate.error.details);
+    setIconClick(true)
   }
   }
   
+
   function sendKey(key) {
     if (errores.length != 0) {
       for (let i= 0; i < errores.length; i++) {
@@ -81,10 +85,10 @@ export default function Login({getTkn}) {
 
 
   return <>
-  <div><h2 className='m-3'>Movie<span className='text-danger'>d</span><span className='text-info'>b</span></h2></div>
-  <div className= 'reg container py-5 w-50'>
+ 
+  <div className= 'reg container py-5 mt-5 w-50'>
    <form onSubmit={submitUser}>
-    <h3 className='my-3'>Signin </h3>
+    <h3 className='my-3'>Sign In </h3>
 
     <div className='mb-3'>
     <label htmlFor="email">Email</label>
@@ -95,16 +99,17 @@ export default function Login({getTkn}) {
     <div className='mb-3'>
     <label htmlFor="password">Password</label>
     <input onChange={getUser} id='password' type="password" className='form-control form-control-lg shadow-none border-0 'placeholder='your password'  />
-    { sendKey("password")? <div className='text-danger mt-2'><i className="fa-solid fa-circle-xmark text-danger"></i>   your password is incorrect </div> :"" }
+    { sendKey("password")? <div className='text-danger mt-2'><i className="fa-solid fa-circle-xmark text-danger"></i>   your password is incorrect </div> :"" }  
+    </div>
     
-    </div>
     <div className=' d-flex'>
-    <button className='btn btn-outline-info  fw-semibold' type='submit'>signin</button>
-    {apiMessage.length !=0 ? <div className='text-danger ms-2'>{apiMessage}</div> :""}
-
+    <button className='btn btn-outline-info  fw-semibold' type='submit'>
+      {iconClick ==true?"signin":<i className="fa-solid fa-spinner fa-spin text-white"></i>}
+      </button>
+    {apiMessage.length !=0 ? <div className='text-danger ms-3'>{apiMessage}</div> :""}
     </div>
+    
    </form>
   </div>
-  
   </>
 }
