@@ -35,6 +35,7 @@ export default function App() {
 
   const router = createBrowserRouter([
   {path:"" ,  element: <Nav /> , children:[
+    {path:"", element: <ProtectRoute> <Home/> </ProtectRoute>},
     {path:"", element: <Login />},
     {path:"reg", element: <Reg />},
     {path:"login", element: <Login />},

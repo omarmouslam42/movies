@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom';
 
 export default function MovieDetails() {
@@ -7,7 +7,7 @@ export default function MovieDetails() {
     let {id,media_type} = useParams()
     // console.log(id);
     const [alldetails, setAlldetails] = useState([]);
-
+   
    async function detailsApi() {
         let {data} = await axios.get(`https://api.themoviedb.org/3/${media_type}/${id}?api_key=f0ed7bd219ff6aef192b03c155acb49d&language=en-US`)
         setAlldetails(data)

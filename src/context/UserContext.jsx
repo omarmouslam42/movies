@@ -1,14 +1,14 @@
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
-import React, { createContext, useEffect, useState } from 'react'
+import React, { createContext,  useEffect, useState } from 'react'
 
 
-export const ApiContext = createContext();
+   export const ApiContext = createContext();
 
-export default function UserContext(props) {
+ function UserContext(props) {
 
     const [loggedInUser, setLoggedInUser] = useState(null);
-
+    // const movieRef=useRef
 
     function getTkn() {
       if (localStorage.getItem("tkn") !=null) {
@@ -37,18 +37,21 @@ export default function UserContext(props) {
       // console.log(data.results);
       setTvshows(data.results)
     }
-  
-    useEffect(() => {
-      apiMovies()
-      apiTvShows()
-      
-    });
-  
 
     
-  return <ApiContext.Provider value={  {loggedInUser , getTkn , movies , tvshows, removeData } }>
+  
+    useEffect(() => {
+      // console.log("render");
+      apiTvShows();
+      apiMovies();
+    
+    }, []);
+
+    
+  return <ApiContext.Provider value={  {loggedInUser , getTkn , movies , tvshows, removeData ,apiMovies, apiTvShows } }>
   
   {props.children}
   
   </ApiContext.Provider>
 }
+export default UserContext

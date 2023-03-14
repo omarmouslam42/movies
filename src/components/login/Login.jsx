@@ -32,11 +32,11 @@ export default function Login() {
 
   async function userApi() {
     let {data} = await axios.post(`https://sticky-note-fe.vercel.app/signin`,user)
-    console.log(data.message);
+    // console.log(data.message);
 
     if (data.message == "success") {
       // go home
-      console.log("done");
+      // console.log("done");
       //navigate
       localStorage.setItem("tkn",data.token )
       getTkn();
