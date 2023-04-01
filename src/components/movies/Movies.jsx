@@ -8,7 +8,7 @@ export default function Movies() {
  return <>
   {movies ||multi?
    <>
-   {name.value !=""? 
+   {name?.value !="" && multi !=null? 
     <div className='home container py-5 mt-5 home'>
     <div className='row page'>
       {multi?.filter(el=>el.poster_path && el.title !=null)?.map((movie , idx)=>
