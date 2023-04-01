@@ -11,16 +11,13 @@ import TVshows from './components/tvshows/TVshows.jsx';
 import React, { useContext } from 'react'
 import { ApiContext } from './context/UserContext.jsx';
 
-
-
-
-
 export default function App() {
   const {loggedInUser} = useContext(ApiContext);
 
   function ProtectRoute(props) {
     
-    if (loggedInUser ==null) {
+    if (localStorage.getItem("tkn") ===null) {
+      // loggedInUser ==null
       // el user lsa mga4
       return<Navigate to="/login" />
     }
