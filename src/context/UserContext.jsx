@@ -14,7 +14,7 @@ import React, { createContext,  useEffect, useState } from 'react'
     const [tvshows, setTvshows] = useState(null);
     const [multi, setMulti] = useState(null);
     let name =document.querySelector(".searchMovies");
-
+  
 
     function getTkn() {
       if (localStorage.getItem("tkn") !=null) {
@@ -33,9 +33,13 @@ import React, { createContext,  useEffect, useState } from 'react'
     async function searchMoives() {
           let{data}= await axios.get(`https://api.themoviedb.org/3/search/multi?api_key=f0ed7bd219ff6aef192b03c155acb49d&language=en-US&query=${name?.value}&page=1&include_adult=false`)
           // console.log(data.results);
-          setMulti(data.results)
+          setMulti(data.results);
+        
     }
 
+function DeleteSearch() {
+  name.value = ""
+}
   
     async function apiMovies() {
       let {data} = await axios.get(`https://api.themoviedb.org/3/trending/movie/week?api_key=f0ed7bd219ff6aef192b03c155acb49d`)
@@ -57,7 +61,7 @@ import React, { createContext,  useEffect, useState } from 'react'
     }, []);
 
     
-  return <ApiContext.Provider value={{loggedInUser,name,multi,searchMoives, getTkn , movies , tvshows, removeData ,apiMovies, apiTvShows } }>
+  return <ApiContext.Provider value={{loggedInUser,name,DeleteSearch,multi,searchMoives, getTkn , movies , tvshows, removeData ,apiMovies, apiTvShows } }>
   
   {props.children}
   

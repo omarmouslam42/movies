@@ -12,7 +12,7 @@ import React, { useContext } from 'react'
 import { ApiContext } from './context/UserContext.jsx';
 
 export default function App() {
-  const {loggedInUser} = useContext(ApiContext);
+  // const {loggedInUser} = useContext(ApiContext);
 
   function ProtectRoute(props) {
     

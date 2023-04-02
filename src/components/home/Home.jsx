@@ -1,11 +1,10 @@
 import React, { useContext, useEffect} from 'react'
-// import { useRef } from 'react';
 import { Link} from 'react-router-dom';
 import { ApiContext } from '../../context/UserContext';
 
 export default function Home() {
 
- const {movies,tvshows,multi,name} = useContext(ApiContext);
+ const {movies,tvshows,multi,name,DeleteSearch} = useContext(ApiContext);
   
   return <>
  {movies && tvshows || multi? 
@@ -15,7 +14,7 @@ export default function Home() {
   <div className='row page'>
     {multi?.filter(el=>el.poster_path && el.title !=null)?.map((movie , idx)=>
        <div key={idx} className='col-lg-2 col-md-3'>
-        <Link  to={`/MovieDetails/${movie.media_type}/${movie.id}`}>
+        <Link onClick={DeleteSearch} to={`/MovieDetails/${movie.media_type}/${movie.id}`}>
         <div className= "movie position-relative ">
         <div className='position-absolute bg-info end-0 rounded-1 p-1'>
         {movie.vote_average}

@@ -6,7 +6,7 @@ import { ApiContext } from '../../context/UserContext';
 export default function Nav() {
  
 
-  const {loggedInUser , removeData, getTkn ,movies,searchMoives} = useContext(ApiContext);
+  const {loggedInUser , removeData, getTkn ,searchMoives} = useContext(ApiContext);
   const navigate = useNavigate()
 
 
@@ -77,7 +77,7 @@ useEffect(() => {
 
         {loggedInUser !=null?  <form className="d-flex" role="search">
           <input onKeyUp={searchMoives} className="form-control me-2 searchMovies" type="search" placeholder="Search" aria-label="Search"/>
-        <button onClick={searchMoives} className="btn btn-outline-info" type="submit">Search</button>
+        <button onClick={searchMoives} className="btn btn-outline-info" >Search</button>
       </form>:""}
        {loggedInUser!=null?<ul>
         <li className="nav-item fs-5">
